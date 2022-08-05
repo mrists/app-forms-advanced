@@ -1,0 +1,32 @@
+<form>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input class="form-control" type="text" name="name" id="name" [(ngModel)]="model.name" required maxlength="10" minlength="4" #name="ngModel">
+
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+          <div *ngIf="name.errors?.['required']">Name is required</div>
+          <div *ngIf="name.errors?.['minlength'] && name.dirty">Name must be at least 4 characters long.</div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="age" class="form-label">Age:</label>
+        <input class="form-control" type="text" name="age" id="age" [(ngModel)]="model.age" #age="ngModel">
+
+        <div *ngIf="age.invalid && (age.dirty || age.touched)" class="alert alert-danger">Age is required</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="age" class="form-label">Role:</label>
+        <select class="form-select" name="role" id="role" [(ngModel)]="model.role">
+          <option value="" disabled selected>Choose role</option>
+          <option [value]="role" *ngFor="let role of roles">{{role}}</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+      <button class="btn btn-info">Save</button>
+    </div>
+</form>
+
+{{model | json}}
