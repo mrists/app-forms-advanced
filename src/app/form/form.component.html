@@ -1,44 +1,54 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
     <div class="mb-3">
         <label class="form-label" for="name">Name:</label>
-        <input class="form-control" type="text" id="name" formControlName="name" (blur)="onValueChanged()">
-
-        <div class="alert alert-danger" *ngIf="formErrors.name">{{formErrors.name}}</div>
+        <input class="form-control" type="text" id="name" formControlName="name" (blur)="onValueChanged()" placeholder="Enter login..."
+        [ngClass]="{'is-valid': !(formErrors.name) && userForm.controls['name'].touched, 'is-invalid': formErrors.name}">
+        <div class="valid-feedback">All right!</div>
+        <div class="invalid-feedback">{{formErrors.name}}</div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="password">Password:</label>
-        <input class="form-control" type="password" id="password" formControlName="password" (blur)="onValueChanged()"> 
+        <input class="form-control" type="password" id="password" formControlName="password" (blur)="onValueChanged()" placeholder="Enter password..."
+        [ngClass]="{'is-valid': !(formErrors.password)  && userForm.controls['password'].touched, 'is-invalid': formErrors.password}"> 
 
-        <div class="alert alert-danger" *ngIf="formErrors.password">{{formErrors.password}}</div>
+        <div class="valid-feedback">All right!</div>
+        <div class="invalid-feedback">{{formErrors.password}}</div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="email">Email:</label>
-        <input class="form-control" type="email" id="email" formControlName="email" (blur)="onValueChanged()">
+        <input class="form-control" type="email" id="email" formControlName="email" (blur)="onValueChanged()" placeholder="Enter email..."
+        [ngClass]="{'is-valid': !(formErrors.email)  && userForm.controls['email'].touched, 'is-invalid': formErrors.email}">
 
-        <div class="alert alert-danger" *ngIf="formErrors.email">{{formErrors.email}}</div>
-    </div>
+        <div class="valid-feedback">All right!</div>
+        <div class="invalid-feedback">{{formErrors.email}}</div>    
+      </div>
 
     <div class="mb-3">
         <label class="form-label" for="age">Age:</label>
-        <input class="form-control" type="text" id="age" formControlName="age" (blur)="onValueChanged()">
+        <input class="form-control" type="text" id="age" formControlName="age" (blur)="onValueChanged()" placeholder="Enter age..."
+        [ngClass]="{'is-valid': !(formErrors.age)  && userForm.controls['age'].touched, 'is-invalid': formErrors.age}">
 
-        <div class="alert alert-danger" *ngIf="formErrors.age">{{formErrors.age}}</div>
+        <div class="valid-feedback">All right!</div>
+        <div class="invalid-feedback">{{formErrors.age}}</div>
     </div>
 
     <div class="mb-3">
       <label for="role" class="form-label">Role:</label>
-      <select class="form-select" id="role" formControlName="role" (blur)="onValueChanged()">
+      <select class="form-select" id="role" formControlName="role" (blur)="onValueChanged()"
+      [ngClass]="{'is-valid': !(formErrors.role)  && userForm.controls['role'].touched, 'is-invalid': formErrors.role}">
         <option [value]="null" disabled selected>Choose role</option>
         <option [value]="role" *ngFor="let role of roles">{{role}}</option>
       </select>
 
-      <div class="alert alert-danger" *ngIf="formErrors.role">{{formErrors.role}}</div>
+      <div class="valid-feedback">All right!</div>
+      <div class="invalid-feedback">{{formErrors.role}}</div>
   </div>
 
     <div class="mb-3">
-      <button class="btn btn-info">Save</button>
+      <p *ngIf="userForm.invalid">Complete the form to enable button</p>
+      <button class="btn btn-info" [disabled]="userForm.invalid">Save</button>
     </div>
 </form>
 

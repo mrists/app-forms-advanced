@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { emailValidator } from '../custom-validators';
+import { ageValidator, emailValidator } from '../custom-validators';
 import { User } from '../user.class';
 
 @Component({
@@ -9,12 +9,11 @@ import { User } from '../user.class';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
- 
-   roles: string[] = ['Guest', 'Moder', 'Admin']
-   user: User = new User(null, null, null, null, null, null)
+  roles: string[] = ['Guest', 'Moder', 'Admin']
+  user: User = new User(null, null, null, null, null, null)
 
   userForm!: FormGroup
-
+  
   formErrors: any = {
       name: '',
       password: '',
@@ -24,24 +23,24 @@ export class FormComponent implements OnInit {
   }
   validationMessages: any = {
     name: {
-      required: 'Name is required',
-      minlength: 'Name must be at least 4 characters long',
-      maxlength: "Max name's long is 10 characters",
+      required: 'Name is required.',
+      minlength: 'Name must be at least 4 characters long.',
+      maxlength: "Max name's long is 10 characters.",
     },
     password: {
-      required: 'Password is required',
-      minlength: 'Password must be at least 7 characters long'
+      required: 'Password is required.',
+      minlength: 'Password must be at least 7 characters long.'
     },
     email: {
-      required: 'Email is required',
-      emailValidator: 'Email has invalid format'
+      required: 'Email is required.',
+      emailValidator: 'Email has invalid format.'
     },
     age: {
-      required: 'Age is required',
-      pattern: 'Age must be a number'
+      required: 'Age is required.',
+      ageValidator: 'Age must be a number in range 1 - 122.'
     },
     role: {
-      required: 'Role is required'
+      required: 'Role is required.'
     }
   }
 
@@ -56,7 +55,7 @@ export class FormComponent implements OnInit {
       name: [this.user.name, [Validators.required, Validators.maxLength(10), Validators.minLength(4)]],
       password: [this.user.password, [Validators.required, Validators.minLength(7)]],
       email: [this.user.email, [Validators.required, emailValidator]],
-      age: [this.user.age, [Validators.required, Validators.pattern(/^\d+/)]],
+      age: [this.user.age, [Validators.required, ageValidator(1 , 122)]],
       role: [this.user.role, Validators.required]
     })
 
