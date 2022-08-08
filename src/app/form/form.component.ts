@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ageValidator, emailValidator } from '../custom-validators';
+import { FORM_ERRORS, VALIDATION_MESSAGES } from '../form-data';
 import { User } from '../user.class';
 
 @Component({
@@ -9,40 +10,13 @@ import { User } from '../user.class';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  roles: string[] = ['Guest', 'Moder', 'Admin']
-  user: User = new User(null, null, null, null, null, null)
-
-  userForm!: FormGroup
+  validationMessages: any = VALIDATION_MESSAGES
+  formErrors: any = FORM_ERRORS
   
-  formErrors: any = {
-      name: '',
-      password: '',
-      email: '',
-      age: '',
-      role: ''
-  }
-  validationMessages: any = {
-    name: {
-      required: 'Name is required.',
-      minlength: 'Name must be at least 4 characters long.',
-      maxlength: "Max name's long is 10 characters.",
-    },
-    password: {
-      required: 'Password is required.',
-      minlength: 'Password must be at least 7 characters long.'
-    },
-    email: {
-      required: 'Email is required.',
-      emailValidator: 'Email has invalid format.'
-    },
-    age: {
-      required: 'Age is required.',
-      ageValidator: 'Age must be a number in range 1 - 122.'
-    },
-    role: {
-      required: 'Role is required.'
-    }
-  }
+  roles: string[] = ['Guest', 'Moder', 'Admin']
+  private user: User = new User(null, null, null, null, null, null)
+  
+  userForm!: FormGroup
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -65,6 +39,7 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('Form submited')
   }
 
   onValueChanged(data?: any): void {
@@ -75,67 +50,11 @@ export class FormComponent implements OnInit {
       
       const control = form?.controls[field]
       
-      if(control && control.invalid && (control.dirty || control.touched)) {
+      if(control && control.invalid && (control.dirty || control.touched) && control.errors) {
         const message = this.validationMessages[field]
 
-        if(control.errors) {
-          Object.keys(control.errors).forEach((err) => this.formErrors[field] +=  message[err] + ' ')
-        }
+        Object.keys(control.errors).some(err => this.formErrors[field] =  message[err])
       }
     })
   }
 }
-// export class FormComponent implements OnInit, AfterViewInit {
-//   roles: string[] = ['Guest', 'Moder', 'Admin']
-//   model: User = new User(1, '', '')
-
-//   formErrors: any = {
-//     name: '',
-//     age: ''
-//   }
-//   validationMessages: any = {
-//     name: {
-//       required: 'Name is required',
-//       minlength: 'Name must be at least 4 characters long'
-//     },
-//     age: {
-//       required: 'Age is required'
-//     }
-//   }
-
-//   @ViewChild('userForm') userForm: NgForm | null = null;
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-//   ngAfterViewInit(): void {
-//     this.userForm?.valueChanges?.subscribe(() => {
-//       this.onValueChanged()
-//     })
-//   }
-
-//   onValueChanged(data?: any): void {
-//     const form = this.userForm
-
-//     Object.keys(this.formErrors).forEach((field) => {
-//       this.formErrors[field] = ''
-      
-//       const control = form?.controls[field]
-      
-//       if(control && control.invalid && (control.dirty || control.touched)) {
-//         const message = this.validationMessages[field]
-
-//         if(control.errors) {
-//           Object.keys(control.errors).forEach((err) => {
-//             this.formErrors[field] +=  message[err] + ' '
-//           })
-//         }
-//       }
-//     })
-//   }
-
-//   onSubmit() {
-//   }
-// }

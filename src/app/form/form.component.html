@@ -1,8 +1,9 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
     <div class="mb-3">
         <label class="form-label" for="name">Name:</label>
-        <input class="form-control" type="text" id="name" formControlName="name" (blur)="onValueChanged()" placeholder="Enter login..."
+        <input class="form-control" type="text" id="name" formControlName="name" (blur)="onValueChanged()" placeholder="Enter name..."
         [ngClass]="{'is-valid': !(formErrors.name) && userForm.controls['name'].touched, 'is-invalid': formErrors.name}">
+        
         <div class="valid-feedback">All right!</div>
         <div class="invalid-feedback">{{formErrors.name}}</div>
     </div>
@@ -51,33 +52,3 @@
       <button class="btn btn-info" [disabled]="userForm.invalid">Save</button>
     </div>
 </form>
-
-<!-- <form #userForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-        <label for="name" class="form-label">Name:</label>
-        <input (blur)="onValueChanged()" class="form-control" type="text" name="name" id="name" [(ngModel)]="model.name" required maxlength="10" minlength="4" #name="ngModel">
-
-        <div *ngIf="formErrors.name" class="alert alert-danger">{{formErrors.name}}</div>
-    </div>
-
-    <div class="mb-3">
-        <label for="age" class="form-label">Age:</label>
-        <input (blur)="onValueChanged()" class="form-control" type="text" name="age" id="age" [(ngModel)]="model.age"  required #age="ngModel">
-
-        <div *ngIf="formErrors.age" class="alert alert-danger">{{formErrors.age}}</div>
-    </div>
-
-    <div class="mb-3">
-        <label for="age" class="form-label">Role:</label>
-        <select class="form-select" name="role" id="role" [(ngModel)]="model.role">
-          <option value="" disabled selected>Choose role</option>
-          <option [value]="role" *ngFor="let role of roles">{{role}}</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-      <button class="btn btn-info">Save</button>
-    </div>
-</form>
-
-{{model | json}} -->
