@@ -1,0 +1,23 @@
+.text-muted {
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+}
+
+.length {
+    position: absolute;
+    right: 32px;
+    top: 38px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";;
+}
+
+.mb-3 {
+    position: relative;
+}
+
+.valid-length {
+    color: #198754
+}
+
+.invalid-length {
+    color: #dc3545
+}

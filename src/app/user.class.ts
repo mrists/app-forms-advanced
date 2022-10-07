@@ -5,6 +5,7 @@ export class User {
         public password: string | null,
         public email: string | null,
         public age: number | null,
-        public role: string | null
+        public role: string | null,
+        public site: string | null
     ) {}
 }

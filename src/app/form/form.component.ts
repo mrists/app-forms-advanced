@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ageValidator, emailValidator } from '../custom-validators';
-import { FORM_ERRORS, VALIDATION_MESSAGES } from '../form-data';
+import { ageValidator, asyncUrlValidator, emailValidator } from '../custom-validators';
+import { FORM_ERRORS, VALIDATION_MESSAGES, VALUE_LENGTH } from '../form-data';
 import { User } from '../user.class';
 
 @Component({
@@ -12,9 +12,10 @@ import { User } from '../user.class';
 export class FormComponent implements OnInit {
   validationMessages: any = VALIDATION_MESSAGES
   formErrors: any = FORM_ERRORS
+  valueLength = VALUE_LENGTH 
   
   roles: string[] = ['Guest', 'Moder', 'Admin']
-  private user: User = new User(null, null, null, null, null, null)
+  private user: User = new User(null, null, null, null, null, null, null)
   
   userForm!: FormGroup
 
@@ -26,10 +27,11 @@ export class FormComponent implements OnInit {
 
   private buildForm(): void {
     this.userForm = this.formBuilder.group({
-      name: [this.user.name, [Validators.required, Validators.maxLength(10), Validators.minLength(4)]],
+      name: [this.user.name, [Validators.required, Validators.maxLength(15), Validators.minLength(4)]],
       password: [this.user.password, [Validators.required, Validators.minLength(7)]],
       email: [this.user.email, [Validators.required, emailValidator]],
       age: [this.user.age, [Validators.required, ageValidator(1 , 122)]],
+      site: [this.user.site, [Validators.required], asyncUrlValidator],
       role: [this.user.role, Validators.required]
     })
 
@@ -39,11 +41,18 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Form submited')
+    console.log('Form submitted')
   }
 
   onValueChanged(data?: any): void {
     const form = this.userForm
+
+    if(form?.controls['name'].value?.length !== undefined) {
+      this.valueLength.name = form?.controls['name'].value?.length
+    } else this.valueLength.name = 0
+    if(form?.controls['password'].value?.length !== undefined) {
+      this.valueLength.password = form?.controls['password'].value?.length
+    } else this.valueLength.password = 0
 
     Object.keys(this.formErrors).forEach((field) => {
       this.formErrors[field] = ''
